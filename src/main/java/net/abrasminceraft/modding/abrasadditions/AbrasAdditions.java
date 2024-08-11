@@ -3,13 +3,19 @@ package net.abrasminceraft.modding.abrasadditions;
 import com.mojang.logging.LogUtils;
 import net.abrasminceraft.modding.abrasadditions.enchantment.ModEnchantments;
 import net.abrasminceraft.modding.abrasadditions.events.EventImbueHarvest;
+
 import net.abrasminceraft.modding.abrasadditions.events.EventPlayerWakeUp;
+import net.abrasminceraft.modding.abrasadditions.events.EventsGeneral;
+import net.abrasminceraft.modding.abrasadditions.init.PacketInit;
 import net.abrasminceraft.modding.abrasadditions.item.ModItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -17,6 +23,7 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -29,7 +36,11 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.resource.ResourcePackLoader;
 import org.slf4j.Logger;
+
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(AbrasAdditions.MODID)
@@ -49,6 +60,7 @@ public class AbrasAdditions {
             .displayItems((pParameters, pOutput) -> {
                 pOutput.accept(ModItems.GENSOUKYO_FRAG.get());
                 pOutput.accept(ModItems.TELEPORTATION_TICKET.get());
+                pOutput.accept(ModItems.LIQUID_DIAMOND.get());
             })
             .build()
     );
@@ -63,17 +75,18 @@ public class AbrasAdditions {
 
 
         //MY EVENTS
-        MinecraftForge.EVENT_BUS.register(new EventPlayerWakeUp());
+//        MinecraftForge.EVENT_BUS.register(new EventPlayerWakeUp());
         MinecraftForge.EVENT_BUS.register(new EventImbueHarvest());
+        MinecraftForge.EVENT_BUS.register(new EventsGeneral());
+
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-
+        event.enqueueWork(PacketInit::init);
     }
 
     // Add the example block item to the building blocks tab
-    private void addCreative(BuildCreativeModeTabContentsEvent event)
-    {
+    private void addCreative(BuildCreativeModeTabContentsEvent event) {
 //        if(event.getTabKey() == CreativeModeTabs.INGREDIENTS){
 //            event.accept(ModItems.GENSOUKYO_FRAG);
 //        }
@@ -89,5 +102,6 @@ public class AbrasAdditions {
         {
 
         }
+
     }
 }

@@ -4,6 +4,7 @@ import net.abrasminceraft.modding.abrasadditions.enchantment.EnchantmentHarvest;
 import net.abrasminceraft.modding.abrasadditions.enchantment.ModEnchantments;
 import net.abrasminceraft.modding.abrasadditions.item.ModItems;
 import net.abrasminceraft.modding.abrasadditions.utils.Logger;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.data.tags.ItemTagsProvider;
@@ -35,11 +36,13 @@ import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.net.InetSocketAddress;
 import java.util.List;
 
 public class EventImbueHarvest {
     @SubscribeEvent
     public void rightClickEvent(PlayerInteractEvent e){
+
         if(e instanceof PlayerInteractEvent.RightClickBlock || e instanceof PlayerInteractEvent.RightClickItem| e instanceof PlayerInteractEvent.EntityInteract){
             Player p = e.getEntity();
             if(p.getOffhandItem().getItem() == ModItems.GENSOUKYO_FRAG.get()){
@@ -180,68 +183,4 @@ public class EventImbueHarvest {
         state.spawnAfterBreak(world, pos, toolStack, true);
     }
 
-
-
-
-
-//    @SubscribeEvent
-//    public void rightClickEvent2(BlockEvent.BreakEvent e){
-//        BlockState state = e.getState();
-//        Logger.log("broken");
-//        if(!e.getLevel().isClientSide()){
-//            Logger.log("1");
-//            ServerLevel world = (ServerLevel) e.getLevel();
-//            if(state.is(BlockTags.CROPS) || state.getBlock() instanceof  NetherWartBlock){
-//                Logger.log("2");
-//                if(e.getPlayer().getMainHandItem().getEnchantmentLevel(ModEnchantments.HARVEST.get()) > 0) {
-//                    Logger.log("3");
-//                    boolean age = false;
-//                    if (state.getBlock() instanceof CropBlock cropBlock) {
-//                        age = cropBlock.isMaxAge(state);
-//                    } else if (state.getBlock() instanceof NetherWartBlock) {
-//                        age = state.getValue(NetherWartBlock.AGE) >= NetherWartBlock.MAX_AGE;
-//                    }
-//
-//                    if (age) {
-//                        Logger.log("4");
-//                        BlockState replant = state;
-//                        if (state.getBlock() instanceof CropBlock cropBlock) {
-//                            replant = cropBlock.getStateForAge(0);
-//                        } else {
-//                            replant.setValue(NetherWartBlock.AGE, 0);
-//                        }
-//                        BlockEvent.EntityPlaceEvent placeEvent = new BlockEvent.EntityPlaceEvent(
-//                                BlockSnapshot.create(world.dimension(), world, e.getPos()),
-//                                world.getBlockState(e.getPos().below()),
-//                                e.getPlayer()
-//                        );
-//                        if (!MinecraftForge.EVENT_BUS.post(placeEvent)) {
-//                            Logger.log("5");
-//                            Logger.log(e.getPos().toString());
-//                            world.setBlockAndUpdate(e.getPos(), replant);
-//                            Logger.log(world.toString());
-//
-//                            e.getPlayer().level().setBlockAndUpdate(e.getPos(),replant);
-//                            Item rep = state.getBlock().getCloneItemStack(world, e.getPos(), state).getItem();
-//                            final boolean[] removedReplant = {false};
-//                            Block.getDrops(state, world, e.getPos(), null, e.getPlayer(), e.getPlayer().getMainHandItem()).forEach(itemStack -> {
-//                                if (!removedReplant[0] && itemStack.getItem() == rep) {
-//                                    itemStack.setCount(itemStack.getCount() - 1);
-//                                    removedReplant[0] = true;
-//                                }
-//                                Block.popResource(world, e.getPos(), itemStack);
-//                            });
-//
-//                            state.spawnAfterBreak(world, e.getPos(), e.getPlayer().getMainHandItem(), true);
-//
-//                        }
-//                    }
-//
-//                }
-//            }
-//        }
-//
-//
-//
-//    }
 }
