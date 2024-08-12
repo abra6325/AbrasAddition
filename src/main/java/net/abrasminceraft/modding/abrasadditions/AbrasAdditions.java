@@ -8,11 +8,16 @@ import net.abrasminceraft.modding.abrasadditions.events.EventPlayerWakeUp;
 import net.abrasminceraft.modding.abrasadditions.events.EventsGeneral;
 import net.abrasminceraft.modding.abrasadditions.init.PacketInit;
 import net.abrasminceraft.modding.abrasadditions.item.ModItems;
+import net.abrasminceraft.modding.abrasadditions.utils.FileIOManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
+import net.minecraft.util.Unit;
+import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
@@ -21,6 +26,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
@@ -61,6 +67,7 @@ public class AbrasAdditions {
                 pOutput.accept(ModItems.GENSOUKYO_FRAG.get());
                 pOutput.accept(ModItems.TELEPORTATION_TICKET.get());
                 pOutput.accept(ModItems.LIQUID_DIAMOND.get());
+                pOutput.accept(ModItems.DIAMOND_DUST.get());
             })
             .build()
     );
@@ -93,15 +100,8 @@ public class AbrasAdditions {
     }
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
+        log(FileIOManager.getJSONFromFile("abrasconfigs.json").toString());
 
     }
-    @Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    public static class ClientModEvents {
-        @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event)
-        {
 
-        }
-
-    }
 }

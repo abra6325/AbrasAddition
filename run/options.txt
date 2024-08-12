@@ -42,7 +42,7 @@ ao:true
 prioritizeChunkUpdates:0
 biomeBlendRadius:2
 renderClouds:"true"
-resourcePacks:["vanilla","mod_resources"]
+resourcePacks:["vanilla","mod_resources","file/BetterVanillaBuildingV2.96.zip"]
 incompatibleResourcePacks:[]
 lastServer:
 lang:en_us

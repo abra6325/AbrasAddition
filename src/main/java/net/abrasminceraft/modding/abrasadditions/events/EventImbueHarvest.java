@@ -3,6 +3,7 @@ package net.abrasminceraft.modding.abrasadditions.events;
 import net.abrasminceraft.modding.abrasadditions.enchantment.EnchantmentHarvest;
 import net.abrasminceraft.modding.abrasadditions.enchantment.ModEnchantments;
 import net.abrasminceraft.modding.abrasadditions.item.ModItems;
+import net.abrasminceraft.modding.abrasadditions.utils.FileIOManager;
 import net.abrasminceraft.modding.abrasadditions.utils.Logger;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -84,6 +85,7 @@ public class EventImbueHarvest {
                 || state.getBlock() instanceof NetherWartBlock) {
             if (isMature(state)) {
                 if (!world.isClientSide) {
+                    Logger.log(FileIOManager.getJSONFromFile("abrasconfigs.json").toString());
                     BlockEvent.BreakEvent breakEv = new BlockEvent.BreakEvent(world, hitResult.getBlockPos(), state, player);
                     if (MinecraftForge.EVENT_BUS.post(breakEv)) return InteractionResult.FAIL;
                     BlockState replantState = getReplantState(state);

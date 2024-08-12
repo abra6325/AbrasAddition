@@ -24,6 +24,9 @@ public class ModItems {
             () -> new Item(new Item.Properties()
                     .stacksTo(64)
                     .fireResistant()));
+    public static final RegistryObject<Item> DIAMOND_DUST = ITEMS.register("diamond_dust",
+            () -> new Item(new Item.Properties()
+                    .stacksTo(64)));
     public static void register(IEventBus eventBus){
         ITEMS.register(eventBus);
 

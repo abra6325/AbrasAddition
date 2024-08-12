@@ -19,7 +19,7 @@ modId="abrasadditions" #mandatory
 # The version number of the mod
 version="1.0-SNAPSHOT" #mandatory
 # A display name for the mod
-displayName="AbrasAdditions" #mandatory
+displayName="Abra's Additions" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification https://docs.minecraftforge.net/en/latest/misc/updatechecker/
 #updateJSONURL="https://change.me.example.invalid/updates.json" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI

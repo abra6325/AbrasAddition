@@ -1,0 +1,17 @@
+{
+  "modlist": [
+    "gjeb",
+    "optifine",
+    "journeymap",
+    "libipn",
+    "mafglib" ,
+    "inventoryprofilesnext" ,
+    "essential" ,
+    "forgematica"
+  ],
+  "resourcepacklist": [
+    "vanilla",
+    "mod_resources",
+    "file/BetterVanillaBuildingV2.96.zip"
+  ]
+}

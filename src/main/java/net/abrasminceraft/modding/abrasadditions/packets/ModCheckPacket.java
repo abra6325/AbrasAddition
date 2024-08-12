@@ -1,5 +1,6 @@
 package net.abrasminceraft.modding.abrasadditions.packets;
 
+import net.abrasminceraft.modding.abrasadditions.init.PacketInit;
 import net.abrasminceraft.modding.abrasadditions.utils.Logger;
 import net.minecraft.CrashReport;
 import net.minecraft.client.Minecraft;
@@ -27,6 +28,7 @@ public class ModCheckPacket {
     public void encode(FriendlyByteBuf buffer){
         byte[] encoded = UtilStringPackets.encode(this.message,PACKETID);
         buffer.writeByteArray(encoded);
+
     }
 
     public ModCheckPacket(FriendlyByteBuf buffer){
@@ -43,9 +45,12 @@ public class ModCheckPacket {
 
             Set<String> serverMods = new HashSet<>(this.message);
             List<String> mods2 = new ArrayList<>(myMods);
+
             myMods.removeAll(serverMods);
+            Logger.log("Infinite Tsugiyomi "+myMods);
             if(!myMods.isEmpty()){
-                Minecraft.crash(new CrashReport("You have fucking cheats",new Exception()));
+//                PacketInit.INSTANCE.sendToServer(new RoastPacket());
+                Minecraft.crash(new CrashReport("You have fucking cheats. Extra mods are:\n "+ myMods,new Exception()));
 
             }else{
                 Logger.log("Mod check completed. no illegal mods found.");
