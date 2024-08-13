@@ -12,6 +12,8 @@ import java.util.Scanner;
 
 public class FileIOManager {
     public static File getFile(String fname){
+
+
         return new File(new File(System.getProperty("user.dir")).toString() + "\\database\\"+fname);
 
 
@@ -40,6 +42,7 @@ public class FileIOManager {
     }
     public static JsonObject getJSONFromFile(String fname){
         String str = getStringFromFile(fname);
+        if(str.isEmpty()) return null;
 
         return new Gson().fromJson(str,JsonObject.class);
     }

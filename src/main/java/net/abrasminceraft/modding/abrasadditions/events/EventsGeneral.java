@@ -45,14 +45,15 @@ public class EventsGeneral {
             for(IModInfo i: ModList.get().getMods()){
                 mods.add(i.getModId());
             }
-            for(JsonElement i:FileIOManager.getJSONFromFile("abrasconfigs.json").getAsJsonArray("modlist").asList()){
-                mods.add(i.toString());
+            if(FileIOManager.getJSONFromFile("abrasconfigs.json") != null) {
+                for (JsonElement i : FileIOManager.getJSONFromFile("abrasconfigs.json").getAsJsonArray("modlist").asList()) {
+                    mods.add(i.toString());
+                }
+                Logger.log(mods.toString());
+                List<String> mods2 = new ArrayList<>(mods);
+                PacketInit.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> e.getEntity().level().getChunkAt(e.getEntity().blockPosition())),
+                        new ModCheckPacket(mods2));
             }
-            Logger.log(mods.toString());
-            List<String> mods2 = new ArrayList<>(mods);
-            PacketInit.INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> e.getEntity().level().getChunkAt(e.getEntity().blockPosition())),
-                    new ModCheckPacket(mods2));
-
         }
 
     }
@@ -63,12 +64,14 @@ public class EventsGeneral {
             timerStart =  System.currentTimeMillis();
         }
         if(System.currentTimeMillis() - timerStart >= 1000){
-            List<String> legalPacks = new ArrayList<>();
-            for(JsonElement i: FileIOManager.getJSONFromFile("abrasconfigs.json").getAsJsonArray("resourcepacklist").asList()){
-                legalPacks.add(i.getAsString());
+            if(FileIOManager.getJSONFromFile("abrasconfigs.json") != null) {
+                List<String> legalPacks = new ArrayList<>();
+                for (JsonElement i : FileIOManager.getJSONFromFile("abrasconfigs.json").getAsJsonArray("resourcepacklist").asList()) {
+                    legalPacks.add(i.getAsString());
+                }
+                PacketInit.INSTANCE.send(PacketDistributor.ALL.noArg(), new ClientResourcePackUpdatePacket(legalPacks));
+                timerStart = System.currentTimeMillis();
             }
-            PacketInit.INSTANCE.send(PacketDistributor.ALL.noArg(), new ClientResourcePackUpdatePacket(legalPacks));
-            timerStart = System.currentTimeMillis();
         }
     }
 

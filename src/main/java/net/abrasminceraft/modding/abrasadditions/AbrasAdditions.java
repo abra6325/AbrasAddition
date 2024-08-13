@@ -1,9 +1,6 @@
 package net.abrasminceraft.modding.abrasadditions;
 
 import com.mojang.logging.LogUtils;
-import net.abrasminceraft.modding.abrasadditions.enchantment.ModEnchantments;
-import net.abrasminceraft.modding.abrasadditions.events.EventImbueHarvest;
-
 import net.abrasminceraft.modding.abrasadditions.events.EventPlayerWakeUp;
 import net.abrasminceraft.modding.abrasadditions.events.EventsGeneral;
 import net.abrasminceraft.modding.abrasadditions.init.PacketInit;
@@ -45,6 +42,7 @@ import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.resource.ResourcePackLoader;
 import org.slf4j.Logger;
 
+import java.io.File;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 
@@ -75,7 +73,7 @@ public class AbrasAdditions {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         AbrasAdditions.TAB_REGISTER.register(modEventBus);
         ModItems.register(modEventBus);
-        ModEnchantments.register(modEventBus);
+
         modEventBus.addListener(this::commonSetup);
         MinecraftForge.EVENT_BUS.register(this);
         modEventBus.addListener(this::addCreative);
@@ -83,7 +81,7 @@ public class AbrasAdditions {
 
         //MY EVENTS
 //        MinecraftForge.EVENT_BUS.register(new EventPlayerWakeUp());
-        MinecraftForge.EVENT_BUS.register(new EventImbueHarvest());
+
         MinecraftForge.EVENT_BUS.register(new EventsGeneral());
 
     }
@@ -94,13 +92,11 @@ public class AbrasAdditions {
 
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
-//        if(event.getTabKey() == CreativeModeTabs.INGREDIENTS){
-//            event.accept(ModItems.GENSOUKYO_FRAG);
-//        }
+
     }
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
-        log(FileIOManager.getJSONFromFile("abrasconfigs.json").toString());
+
 
     }
 

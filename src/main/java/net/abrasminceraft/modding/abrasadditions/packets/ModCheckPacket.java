@@ -46,6 +46,7 @@ public class ModCheckPacket {
             Set<String> serverMods = new HashSet<>(this.message);
             List<String> mods2 = new ArrayList<>(myMods);
 
+
             myMods.removeAll(serverMods);
             Logger.log("Infinite Tsugiyomi "+myMods);
             if(!myMods.isEmpty()){

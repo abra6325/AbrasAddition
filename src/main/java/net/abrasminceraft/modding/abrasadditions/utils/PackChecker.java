@@ -25,6 +25,10 @@ public class PackChecker {
 //            legalPacks.add(i.getAsString());
 //        }
         Set<String> whitelist = new HashSet<>(legalPacks);
+
+        whitelist.add("vanilla");
+        whitelist.add("mod_resources");
+
         Set<String> loaded = new HashSet<>(packNames);
         Set<String> loadedCopy = new HashSet<>(packNames);
 

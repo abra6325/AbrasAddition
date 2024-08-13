@@ -10,8 +10,7 @@
     "forgematica"
   ],
   "resourcepacklist": [
-    "vanilla",
-    "mod_resources",
+
     "file/BetterVanillaBuildingV2.96.zip"
   ]
 }
